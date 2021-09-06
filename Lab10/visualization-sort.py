@@ -1,3 +1,6 @@
+"""This file was created by Sacha de Poyen-Brown with the purpose of visualizing a sorting algorithm so one could better understand how they work.
+It was created in August 2021"""
+
 import matplotlib.pyplot as plt
 import time
 plt.style.use('ggplot') #This one line code fragment came from https://benalexkeen.com/bar-charts-in-matplotlib/
