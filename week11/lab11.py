@@ -27,6 +27,8 @@ class Data():
         self.notOut = [4]
         self.listOfPoints = []
         self.listOfPoints1 = []
+        self.listOfPoints2 = []
+        self.listOfPoints3 = []
         self.num = num
         if type(data) != int:
             self.points1 = data.points1
@@ -71,10 +73,22 @@ class Data():
         for i in range(len(xc)):
 
             if bool(i == self.notOut[0]) == bool(self.num != 0) or bool(i == self.notOut[0]) == bool(self.num != 1) :
-                self.points1 = [xc[i] + x1, yc[i] + x1, xc[i] - x1, yc[i] + x1, xc[i] - x1, yc[i] - x1, xc[i] + x1, yc[i] - x1]
-                self.points = [xc[i], yc[i] + o1, xc[i] + o1, yc[i], xc[i], yc[i] - o1, xc[i] - o1, yc[i]]
+                self.points1 = [xc[i] + x1, yc[i] + x1, xc[i] - x1, yc[i] + x1,
+                    xc[i] - x1, yc[i] - x1, xc[i] + x1, yc[i] - x1]
+
+                self.points = [xc[i], yc[i] + o1, xc[i] + o1, yc[i], xc[i],
+                    yc[i] - o1, xc[i] - o1, yc[i]]
+
+                self.points3 = [xc[i], yc[i] + o1 + o1 / 5, xc[i] + o1,
+                    yc[i], xc[i], yc[i] - o1 - o1 / 5, xc[i] - o1, yc[i]]
+
+                self.points2 = [xc[i], yc[i] + o1, xc[i] + o1 + o1 / 5,
+                    yc[i], xc[i], yc[i] - o1, xc[i] - o1 - o1 / 5, yc[i]]
+
                 self.listOfPoints1 += [self.points1.copy()]
                 self.listOfPoints += [self.points.copy()]
+                self.listOfPoints2 += [self.points2.copy()]
+                self.listOfPoints3 += [self.points3.copy()]
 
 
 def getUserInput():
@@ -104,13 +118,8 @@ def recurDraw(num, data):
     num -= 1
     data = recurDraw(num, data)
     data = Data(num, data)
-    #print(data.listOfPoints1)
     toDraw(data)
     return data
-
-"""def toDraw(num, data):
-    for i in range(len(data.listOfPoints1)):
-        drawStuff(num, data.listOfPoints1[i], data.listOfPoints[i])"""
 
 def toDraw(data):
     """
@@ -120,25 +129,28 @@ def toDraw(data):
     Calls: drawStuff
     """
     if type(data) != list:
-        data = [data.listOfPoints1.copy(), data.listOfPoints.copy()]
-        #print(data)
+        data = [data.listOfPoints1.copy(), data.listOfPoints.copy(), data.listOfPoints2.copy(), data.listOfPoints3.copy()]
+
     if len(data[0]) == 0:
         return
-    drawStuff(data[0][0], data[1][0])
-    data = [data[0][1:], data[1][1:]]
+
+    drawStuff(data)
+    data = [data[0][1:], data[1][1:], data[2][1:], data[3][1:]]
     data = toDraw(data)
 
 
 
-def drawStuff(points1, points):
+def drawStuff(data):
     """
     Purpose: to draw two polygons
-    Paramaters: points 1 and points - lists of points to make polygons out of
+    Paramaters: points1, points2, points3, and points - lists of points to make polygons out of
     Return: none
+    data[0][0], data[1][0], data[2][0], data[3][0]
     """
-
-    canvas.create_polygon(points1, outline="#f11", fill="#4287f5", width=2)
-    canvas.create_polygon(points, outline="#f11", fill="#1f1", width=2)
+    canvas.create_polygon(data[2][0], outline="#f11", fill="#f11", width=2)
+    canvas.create_polygon(data[3][0], outline="#4287f5", fill="#4287f5", width=2)
+    canvas.create_polygon( data[0][0], outline="#1f1", fill="#4287f5", width=2)
+    canvas.create_polygon( data[1][0], outline="#f11", fill="#1f1", width=2)
 
 if __name__ == "__main__":
     root = Tk()
