@@ -146,6 +146,6 @@ if __name__ == "__main__":
     canvas.pack(fill=BOTH, expand=1)
     root.geometry("800x600")
     root.update_idletasks()
-    #degree = getUserInput()
-    recurDraw(4, root)
+    degree = getUserInput()
+    recurDraw(degree, root)
     root.mainloop()
